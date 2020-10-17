@@ -9,7 +9,7 @@ namespace MarianStochanskyi.RobotChallange
 {
     public class MarianStochanskyiAlgorith : IRobotAlgorithm
     {
-        public string Author => "Marian Stochanskyi";
+        public string Author => Constants.OWNER;
 
         public RobotCommand DoStep(IList<Robot.Common.Robot> robots, int robotToMoveIndex, Map map)
         {

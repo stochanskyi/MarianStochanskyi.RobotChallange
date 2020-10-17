@@ -23,6 +23,15 @@ namespace MarianStochanskyi.RobotChallange
 
             if (attackProfit > 0) return GenerateMovementCommand(attackPosition);
 
+            if (WorseToClone())
+            {
+                return new CreateNewRobotCommand()
+                {
+                    NewRobotEnergy =
+                    (int)(currentMachine.Energy * Constants.CLONING_ENERGY_DIVIDING_PERCENTAGE)
+                };
+            }
+
             if (IsEnergyCollectingAvailable(map.Stations)) return GenerateCollectionCommand();
 
             Position closestStation = GetClosestStationPosition(map.Stations);
@@ -31,6 +40,12 @@ namespace MarianStochanskyi.RobotChallange
 
             return new MoveCommand() { NewPosition = currentMachine.Position };
 
+        }
+
+
+        private bool WorseToClone()
+        {
+            return currentMachine.Energy >= Constants.CLONE_ENERGY_RECOMENDED;
         }
 
 
@@ -101,7 +116,6 @@ namespace MarianStochanskyi.RobotChallange
             return closestPosition;
 
         }
-
 
         //If it is no energy to perform the movement returns -1
         //If there is no profit from atack returns 0

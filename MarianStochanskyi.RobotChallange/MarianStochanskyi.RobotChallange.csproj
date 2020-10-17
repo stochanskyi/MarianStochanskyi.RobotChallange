@@ -45,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BestAlgorithmGenerator.cs" />
+    <Compile Include="ClosestCellCalculator.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="MarianStochanskyiAlgorith.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

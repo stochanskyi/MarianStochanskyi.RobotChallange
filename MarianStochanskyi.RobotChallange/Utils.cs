@@ -9,6 +9,7 @@ namespace MarianStochanskyi.RobotChallange
 {
     class Utils
     {
+
         public int CalculateEnergyToMove(Position currentPosition, Position aimPosition)
         {
             int XDelta = aimPosition.X - currentPosition.X;
