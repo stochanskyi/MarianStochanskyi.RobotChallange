@@ -1,4 +1,6 @@
-﻿using Robot.Common;
+﻿using MarianStochanskyi.RobotChallange.CellFinder;
+using Robot.Common;
+using System;
 using System.Collections.Generic;
 using Machine = Robot.Common.Robot;
 
@@ -34,7 +36,7 @@ namespace MarianStochanskyi.RobotChallange
 
             if (IsEnergyCollectingAvailable(map.Stations)) return GenerateCollectionCommand();
 
-            Position closestStation = GetClosestStationPosition(map.Stations);
+            Position closestStation = GetClosestStationPosition(map, robots);
 
             if (closestStation != null) return GenerateMovementCommand(closestStation);
 
@@ -45,7 +47,8 @@ namespace MarianStochanskyi.RobotChallange
 
         private bool WorseToClone()
         {
-            return currentMachine.Energy >= Constants.CLONE_ENERGY_RECOMENDED;
+            //return currentMachine.Energy >= Constants.CLONE_ENERGY_RECOMENDED;
+            return false;
         }
 
 
@@ -60,7 +63,7 @@ namespace MarianStochanskyi.RobotChallange
                 if (IsMyRobot(machine)) continue;
 
                 int currentAttackProfit = CalculateAtackProfit(machine);
-                if (attackProfit <= 0) continue;
+                if (currentAttackProfit <= 0) continue;
 
                 if (attackProfit < currentAttackProfit)
                 {
@@ -70,7 +73,6 @@ namespace MarianStochanskyi.RobotChallange
             }
 
             profit = attackProfit;
-
             return closestPosition;
         }
 
@@ -90,17 +92,19 @@ namespace MarianStochanskyi.RobotChallange
             return false;
         }
 
-        private Position GetClosestStationPosition(IList<EnergyStation> stations)
+        private Position GetClosestStationPosition(Map map, IList<Machine> robots)
         {
             Position closestPosition = null;
             int closestDistance = -1;
+            EnergyStation closestStation = null;
 
-            foreach (EnergyStation station in stations)
+            foreach (EnergyStation station in map.Stations)
             {
                 if (closestPosition == null)
                 {
                     closestPosition = station.Position;
                     closestDistance = utils.CalculateDistance(currentMachine.Position, station.Position);
+                    closestStation = station;
                     continue;
                 }
 
@@ -110,10 +114,14 @@ namespace MarianStochanskyi.RobotChallange
                 {
                     closestPosition = station.Position;
                     closestDistance = distance;
+                    closestStation = station;
                 }
             }
 
-            return closestPosition;
+            var closestFreePosition = new CellSearcher(closestStation, robots).Calculate(currentMachine.Position);
+
+            if (closestFreePosition != null) return closestFreePosition;
+            else return map.FindFreeCell(closestPosition, robots);
 
         }
 

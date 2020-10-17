@@ -45,7 +45,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BestAlgorithmGenerator.cs" />
-    <Compile Include="ClosestCellCalculator.cs" />
+    <Compile Include="CellFinder\BaseCellSearcher.cs" />
+    <Compile Include="CellFinder\CellSearcher.cs" />
+    <Compile Include="CellFinder\FirstQuaterCellSearcher.cs" />
+    <Compile Include="CellFinder\FourthQuaterCellSearcher.cs" />
+    <Compile Include="CellFinder\SecondQuaterCellSearcher.cs" />
+    <Compile Include="CellFinder\ThirdQuaterCellSearcher.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="MarianStochanskyiAlgorith.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
