@@ -47,8 +47,7 @@ namespace MarianStochanskyi.RobotChallange
 
         private bool WorseToClone()
         {
-            //return currentMachine.Energy >= Constants.CLONE_ENERGY_RECOMENDED;
-            return false;
+            return currentMachine.Energy >= Constants.CLONE_ENERGY_RECOMENDED;
         }
 
 
