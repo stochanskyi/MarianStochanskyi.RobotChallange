@@ -24,5 +24,7 @@ namespace MarianStochanskyi.RobotChallange
         public static float CLONING_ENERGY_DIVIDING_PERCENTAGE = 0.33f;
 
         public static int CLONE_ENERGY_RECOMENDED = (int)((400 /  CLONING_ENERGY_DIVIDING_PERCENTAGE) + CLONING_ENERGY_LOOSING);
+
+        public static int MAX_ROBOTS_COUNT = 100;
     }
 }
