@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace MarianStochanskyi.RobotChallange.CellFinder
+namespace MarianStochanskyi.RobotChallenge.CellFinder
 {
     abstract class BaseCellSearcher
     {
@@ -11,14 +11,14 @@ namespace MarianStochanskyi.RobotChallange.CellFinder
 
         protected Utils utils = new Utils();
 
-        public BaseCellSearcher(EnergyStation station, IList<Robot.Common.Robot> robots)
+        protected BaseCellSearcher(EnergyStation station, IList<Robot.Common.Robot> robots)
         {
             this.station = station;
             this.robots = robots;
         }
         public Position Calculate(Position position)
         {
-            var startPosition = GetStartPosition();
+            var startPosition = GetStartPosition(); 
 
             Position closestPosition = null;
             int closesDistance = 0;
@@ -35,11 +35,11 @@ namespace MarianStochanskyi.RobotChallange.CellFinder
                         continue;
                     }
 
-                    var checkingDistance = utils.CalculateDistance(position, checkingPosition);
+                    var checkingDistance = utils.CalculateEnergyToMove(position, checkingPosition);
 
                     if (closestPosition == null || closesDistance > checkingDistance)
                     {
-                        closestPosition = checkingPosition;
+                        closestPosition = checkingPosition.Copy();
                         closesDistance = checkingDistance;
                     }
 

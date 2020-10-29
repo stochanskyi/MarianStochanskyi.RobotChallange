@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MarianStochanskyi.RobotChallange.UsersCounterr
+namespace MarianStochanskyi.RobotChallenge
 {
-    class UsersCounter
+    public class UsersCounter
     {
         private readonly EnergyStation station;
         private readonly IList<Robot.Common.Robot> robots;

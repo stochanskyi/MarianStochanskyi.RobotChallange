@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MarianStochanskyi.RobotChallange
+namespace MarianStochanskyi.RobotChallenge
 {
     public class MarianStochanskyiAlgorith : IRobotAlgorithm
     {

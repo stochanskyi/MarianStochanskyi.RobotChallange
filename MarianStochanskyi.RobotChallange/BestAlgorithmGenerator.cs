@@ -1,17 +1,16 @@
-﻿using MarianStochanskyi.RobotChallange.CellFinder;
-using MarianStochanskyi.RobotChallange.UsersCounterr;
-using Robot.Common;
+﻿using Robot.Common;
 using System;
 using System.Collections.Generic;
+using MarianStochanskyi.RobotChallenge.CellFinder;
 using Machine = Robot.Common.Robot;
 
-namespace MarianStochanskyi.RobotChallange
+namespace MarianStochanskyi.RobotChallenge
 {
-    class BestAlgorithmGenerator
+    public class BestAlgorithmGenerator
     {
         private readonly Machine currentMachine;
 
-        private Utils utils = new Utils();
+        private readonly Utils utils = new Utils();
 
         public BestAlgorithmGenerator(Machine currentMachine)
         {
@@ -21,6 +20,7 @@ namespace MarianStochanskyi.RobotChallange
 
         public RobotCommand GenerateAction(IList<Machine> robots, Map map)
         {
+
             if (WorseToClone(robots))
             {
                 return new CreateNewRobotCommand()
@@ -73,13 +73,13 @@ namespace MarianStochanskyi.RobotChallange
         {
 
             Position closestPosition = null;
-            int attackProfit = -1;
+            var attackProfit = -1;
 
             foreach (Machine machine in robots)
             {
                 if (IsMyRobot(machine)) continue;
 
-                int currentAttackProfit = CalculateAtackProfit(machine);
+                var currentAttackProfit = CalculateAttackProfit(machine);
                 if (currentAttackProfit <= 0) continue;
 
                 if (attackProfit < currentAttackProfit)
@@ -148,73 +148,27 @@ namespace MarianStochanskyi.RobotChallange
             return potentiallyReceivedEnergy - energyLost;
         }
 
-        private bool IsEnergyCollectionAvailable(IList<EnergyStation> stations)
-        {
-            foreach (EnergyStation station in stations)
-            {
-                if (station.Energy <= 0) continue;
-
-                if (IsEnergyCollectionAvailable(station))
-                {
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
         private bool IsEnergyCollectionAvailable(EnergyStation station)
         {
             if (station == null) return false;
             return utils.CalculateDistance(station.Position, currentMachine.Position) <= Constants.ENERGY_COLLECTING_DISTANCE;
         }
 
-        private Position GetClosestStationPosition(Map map, IList<Machine> robots)
-        {
-            Position closestPosition = null;
-            int closestDistance = -1;
-            EnergyStation closestStation = null;
-
-            foreach (EnergyStation station in map.Stations)
-            {
-                if (closestPosition == null)
-                {
-                    closestPosition = station.Position;
-                    closestDistance = utils.CalculateDistance(currentMachine.Position, station.Position);
-                    closestStation = station;
-                    continue;
-                }
-
-                int distance = utils.CalculateDistance(currentMachine.Position, station.Position);
-
-                if (distance < closestDistance)
-                {
-                    closestPosition = station.Position;
-                    closestDistance = distance;
-                    closestStation = station;
-                }
-            }
-
-            return ClosestStationFreePosition(map, closestStation, robots);
-            
-        }
-
         private Position ClosestStationFreePosition(Map map, EnergyStation station, IList<Machine> robots)
         {
             var closestFreePosition = new CellSearcher(station, robots).Calculate(currentMachine.Position);
 
-            //if (closestFreePosition != null) return closestFreePosition;
-            return map.FindFreeCell(station.Position, robots);
+            return closestFreePosition;
         }
 
         //If it is no energy to perform the movement returns -1
         //If there is no profit from atack returns 0
         //Else returns energy profit
-        private int CalculateAtackProfit(Machine robot)
+        private int CalculateAttackProfit(Machine robot)
         {
             int lostEnergy = utils.CalculateEnergyToMove(currentMachine.Position, robot.Position) + Constants.FIGHTING_ENERGY_LOOSING;
-            if (currentMachine.Energy < lostEnergy) return -1;
 
+            if (currentMachine.Energy < lostEnergy) return -1;
             int gotEnergy = (int)(robot.Energy * 0.3);
 
             if (lostEnergy >= gotEnergy) return 0;

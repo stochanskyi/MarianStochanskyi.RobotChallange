@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MarianStochanskyi.RobotChallange.CellFinder
+namespace MarianStochanskyi.RobotChallenge.CellFinder
 {
     class ThirdQuaterCellSearcher : BaseCellSearcher
     {
@@ -22,7 +22,7 @@ namespace MarianStochanskyi.RobotChallange.CellFinder
         protected override void MoteToNextPosition(Position position)
         {
             position.X++;
-            position.Y--;
+            position.Y++;
         }
 
         protected override void MoveToNextStartPosition(Position position)

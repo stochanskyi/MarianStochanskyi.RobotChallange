@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MarianStochanskyi.RobotChallange.CellFinder
+namespace MarianStochanskyi.RobotChallenge.CellFinder
 {
-    class CellSearcher
+    public class CellSearcher
     {
         protected readonly EnergyStation station;
         protected readonly IList<Robot.Common.Robot> robots;
@@ -20,19 +20,19 @@ namespace MarianStochanskyi.RobotChallange.CellFinder
 
         public Position Calculate(Position currentPosition)
         {
-            if (currentPosition.X >= station.Position.X && currentPosition.Y >= station.Position.Y)
+            if (currentPosition.X >= station.Position.X && currentPosition.Y <= station.Position.Y)
             {
                 return new FirstQuaterCellSearcher(station, robots).Calculate(currentPosition);
             } 
-            else if (currentPosition.X <= station.Position.X && currentPosition.Y >= station.Position.Y)
+            else if (currentPosition.X <= station.Position.X && currentPosition.Y <= station.Position.Y)
             {
                 return new SecondQuaterCellSearcher(station, robots).Calculate(currentPosition);
             }
-            else if (currentPosition.X <= station.Position.X && currentPosition.Y <= station.Position.Y)
+            else if (currentPosition.X <= station.Position.X && currentPosition.Y >= station.Position.Y)
             {
                 return new ThirdQuaterCellSearcher(station, robots).Calculate(currentPosition);
             }
-            else if (currentPosition.X >= station.Position.X && currentPosition.Y <= station.Position.Y)
+            else if (currentPosition.X >= station.Position.X && currentPosition.Y >= station.Position.Y)
             {
                 return new FourthQuaterCellSearcher(station, robots).Calculate(currentPosition);
             }

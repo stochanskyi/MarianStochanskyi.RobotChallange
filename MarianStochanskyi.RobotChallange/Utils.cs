@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MarianStochanskyi.RobotChallange
+namespace MarianStochanskyi.RobotChallenge
 {
-    class Utils
+    public class Utils
     {
 
         public int CalculateEnergyToMove(Position currentPosition, Position aimPosition)
@@ -22,12 +22,6 @@ namespace MarianStochanskyi.RobotChallange
         {
             return Math.Abs(Position1.X - Position2.X) + Math.Abs(Position1.Y - Position2.Y);
         }
-
-        private bool HasEnaughEnergy(EnergyStation Station) 
-        {
-            return Station.Energy >= 50;
-        }
-
 
     }
 }
